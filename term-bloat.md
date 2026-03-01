@@ -5,30 +5,40 @@ image: test-image.png
 description: All the words none of the communication.
 ---
 
-Tech has a word problem. We take normal words, give them new meanings in our tools and frameworks, and then mix those meanings up when we talk to each other. Two people can use the same word and mean completely different things — and neither one notices.
+Tech has a word problem. We take common words, overload them with framework-specific meanings, then assume everyone shares our definition. Two people can use the same word and mean completely different things — and neither one notices until the confusion has already done damage.
 
-Here's a real example. I was talking with a colleague about React and global state. In React, "context" is a built-in way to share data across components. In many other frameworks, "context" means something closer to a database session or scoped environment. We never checked which meaning we were using. We spent ten minutes arguing before we figured out we actually agreed — we were just using the same word two different ways.
+I was once in a meeting about React and global state management. My colleague kept talking about "context" as the solution. I kept pushing back, saying context felt too heavyweight for what we needed. We went in circles for ten minutes before realizing we were talking about completely different things.
 
-"Context" is one word. There are hundreds more like it.
+In React, "context" is a built-in API for sharing data across components without prop drilling. In many backend frameworks, "context" means a database session or request-scoped environment. We were both using our framework's definition without checking if the other person meant the same thing.
 
-## What can you do about it?
+The meeting wasn't wasted because we were wrong. It was wasted because we never paused to align on vocabulary.
 
-### Check before you assume
+## Why This Keeps Happening
 
-When a key term comes up, pause and make sure you both mean the same thing. Don't assume that using the same word means you're on the same page. It takes ten seconds and can save hours.
+Technical terms get overloaded for a few reasons, and they feed on each other.
 
-If you sense something isn't adding up, just ask: "When you say X, do you mean...?" That one question fixes a lot.
+Frameworks and libraries want memorable names for their concepts. "Context" is intuitive — it suggests something ambient and accessible. So React uses it. Django uses it. Go uses it. Each team independently chooses the word because it fits their use case, not realizing (or caring) that everyone else did the same thing.
 
-### Stay curious, not defensive
+Then there's time pressure. When you're moving fast, checking definitions feels like overhead. You assume the other person knows what you mean because you're both technical people working on the same problem. The cost of that assumption only shows up later, after you've already invested time going in the wrong direction.
 
-When something stops making sense, the easy move is to assume the other person is wrong. Don't. Ask a question instead. The people who understand the most aren't the ones with the biggest vocabulary — they're the ones who keep asking until things click.
+There's also a status element. Knowing the "right" terminology signals expertise. Admitting you're unclear about a term can feel like admitting ignorance. So people nod along rather than ask clarifying questions, hoping context will make things clear. It usually doesn't.
 
-### Write definitions down
+The result is that our shared vocabulary becomes less shared over time, even as we use more of the same words.
 
-When you settle on a shared meaning mid-conversation, write it down. A short list of project-specific terms keeps you from having the same argument next month. It also shows you care about clear communication, which is rare and valuable.
+## What I've Found Works
+
+This problem doesn't have a framework-level solution. It's a people problem, which means it requires small, deliberate communication habits.
+
+When a key term comes up in conversation, I've learned to pause and check alignment before moving forward. A simple "When you say context, do you mean the React API or something else?" takes ten seconds and often saves hours. The signal that something might be misaligned is usually subtle — the other person's reaction doesn't quite track with what you said. That's the moment to clarify.
+
+I've also noticed that the developers I learn the most from are the ones who ask clarifying questions, not the ones who already know all the terminology. They're not asking because they don't understand concepts — they're asking because they know that the same word can mean different things, and they'd rather confirm than assume. That habit compounds over time. You waste less effort, build better mental models, and avoid talking past people.
+
+Writing definitions down helps too. When a team settles on what a term means for their project, putting it in a shared doc prevents the same confusion from recurring a month later. It's a small thing that shows you value clarity over speed.
 
 ## Conclusion
 
-Technical words carry a lot of weight, and they don't always mean the same thing to everyone. When something feels off mid-conversation, say so — "I want to make sure we're using this term the same way" — and sort it out before moving on.
+Overloaded terminology isn't just an annoyance — it's a symptom of how technical culture values speed and expertise signaling over clarity. The same dynamics that make us reach for intuitive names like "context" also make us reluctant to admit when we're not aligned on what those names mean.
 
-Maintainable systems start with clear, well-defined concepts. Clear concepts start with people willing to pause and check.
+The fix isn't a better naming convention or a shared glossary (though that helps). The fix is creating space in conversations to check assumptions without it feeling like a failure. When someone asks "What do you mean by X?" they're not slowing things down — they're preventing the much slower problem of building the wrong thing.
+
+Maintainable systems start with clear, well-defined concepts. Clear concepts start with people willing to pause and check. That willingness is more valuable than knowing the right terminology in the first place.
