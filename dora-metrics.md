@@ -73,6 +73,25 @@ Just as successful CEOs obsess over their financial bottom line, successful engi
   * What "acceptable" looks like
   * **Example story**: A fintech startup tracked their change failure rate religiously. They discovered that 50% of their deployments caused incidents—terrifying for a company handling money. Over 9 months, they invested in automated testing, feature flags, and better monitoring. Their failure rate dropped to 12%. The surprise? They were now deploying 3x more frequently than before. Moving fast and not breaking things aren't opposites—they're complementary.
 
+### The Interdependence of Metrics: Why You Need All Four
+- **The trap of single-metric optimization**: What happens when you focus on only one metric
+  * Optimize deployment frequency alone → change failure rate skyrockets (shipping broken code constantly)
+  * Optimize change failure rate alone → deployment frequency plummets (every deploy takes weeks of testing)
+  * Optimize lead time alone → you ship fast but can't recover when things break
+  * Optimize MTTR alone → you get good at fixing fires but never prevent them
+- **The balance**: Elite performers excel at *all four simultaneously*
+  * High deployment frequency + low change failure rate = truly moving fast without breaking things
+  * Short lead time + fast recovery time = resilience built into the system
+  * These metrics create a tension that keeps you honest
+- **Real-world example**:
+  * Company A optimized for deployment frequency and hit 10 deploys/day—but with 60% failure rate. Result: constant firefighting, customer trust eroded, team burnout.
+  * Company B optimized for change failure rate and achieved 2% failures—but deployed once per month. Result: competitors shipped features 10x faster, market share declined.
+  * Company C (elite performer) balanced all four: 8 deploys/day, 12% failure rate, 2-hour lead time, 30-minute MTTR. Result: fast innovation with reliability.
+- **The framework's genius**: You can't game the system by optimizing just one number
+  * The metrics hold each other in check
+  * Your job as CTO: keep all four in healthy ranges simultaneously
+  * This is what separates elite from low performers
+
 - **Time to Restore Service**: How fast do you fix production issues?
   * Elite performers: Less than one hour
   * High performers: Less than one day
@@ -162,10 +181,6 @@ Just as successful CEOs obsess over their financial bottom line, successful engi
   * "Bad, bad things. Not good."
 - **The CEO parallel**: This is the strongest framing device—lean into it heavily
 - **Humble attribution**: "It's not my answer, it's very simple, and it has research backing it"
-
-### Feedback
-- [x] **How to measure**: Brief mention of tools/approaches for tracking these metrics
-- [ ] **The relationship between metrics**: Why optimizing one without the others fails
 
 ### Structural Decisions
 - **Series setup**: This is clearly post #1 in a series about DORA capabilities
