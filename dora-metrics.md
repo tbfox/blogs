@@ -37,19 +37,27 @@ Just as successful CEOs obsess over their financial bottom line, successful engi
   * Google's research, DORA (DevOps Research and Assessment)
   * The book *Accelerate*
   * Not personal opinion—battle-tested, research-backed
+- **Why these metrics matter**: The research shows elite performers are 2x more likely to exceed profitability, productivity, and market share goals
+  * Strong correlation between DORA metrics and business outcomes (organizational performance, profitability, productivity)
+  * High-performing teams using these metrics see measurable improvements in both speed AND stability
+  * Finally, a clear answer to "what should I be measuring?" backed by data from thousands of organizations
 - **The framework**: Four numbers, two categories
-- **Why this matters**: Finally, a clear answer to "what should I be measuring?"
 
 ### The Framework: Move Fast and Don't Break Stuff
 
 #### Category 1: Move Fast (Velocity Metrics)
 - **Deployment Frequency**: How often do you actually ship?
-  * Daily deployments = very good
-  * Once every six months = "you're kerfuffled, you have failed"
+  * Elite performers: Multiple deploys per day (on-demand)
+  * High performers: Once per day to once per week
+  * Medium performers: Once per week to once per month
+  * Low performers: Once per month to once every six months ("you're kerfuffled, you have failed")
   * Why frequency matters more than you think
 
 - **Lead Time for Changes**: Idea to production
-  * If it takes 6 months from idea to production, something is fundamentally broken
+  * Elite performers: Less than one hour
+  * High performers: One day to one week
+  * Medium performers: One week to one month
+  * Low performers: One month to six months (something is fundamentally broken)
   * The goal: minimize this time ruthlessly
   * What this metric reveals about your organization
 
@@ -57,12 +65,18 @@ Just as successful CEOs obsess over their financial bottom line, successful engi
 
 #### Category 2: Don't Break Stuff (Stability Metrics)
 - **Change Failure Rate**: How often does production break?
-  * If 90% of deployments break production, this is catastrophic
+  * Elite performers: 0-15% of deployments cause failures
+  * High performers: 16-30%
+  * Medium performers: 31-45%
+  * Low performers: 46%+ (if 90% of deployments break production, this is catastrophic)
   * The relationship between velocity and stability (they're not opposed)
   * What "acceptable" looks like
 
 - **Time to Restore Service**: How fast do you fix production issues?
-  * Two weeks to fix a production issue = "bad, bad things, not good"
+  * Elite performers: Less than one hour
+  * High performers: Less than one day
+  * Medium performers: One day to one week
+  * Low performers: One week to one month (two weeks = "bad, bad things, not good")
   * The MTTR (Mean Time To Recovery) imperative
   * Why this metric tests your entire system
 
@@ -139,8 +153,6 @@ Just as successful CEOs obsess over their financial bottom line, successful engi
 - **Humble attribution**: "It's not my answer, it's very simple, and it has research backing it"
 
 ### Gaps to Fill
-- **Specific numbers**: What do "good" DORA metrics actually look like? (Elite: deploy multiple times/day, lead time <1 hour, change failure <15%, restore <1 hour)
-- **Why these metrics matter**: Could strengthen with brief mention of the correlation between DORA metrics and business outcomes from the research
 - **Practical examples**: At least 1-2 brief stories of organizations improving their metrics
 - **How to measure**: Brief mention of tools/approaches for tracking these metrics
 - **The relationship between metrics**: Why optimizing one without the others fails
