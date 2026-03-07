@@ -30,8 +30,8 @@ When you receive a voice recording transcript or unstructured notes, you will:
      * Bullet points for key arguments or ideas
      * Sub-bullets for supporting points, examples, or evidence
      * Notes on transitions or narrative connections
-   - Flag any gaps where additional research or examples would strengthen the argument
-   - Suggest where personal anecdotes, data, or external references would add value
+   - Create actionable feedback items (using `- [ ]` checkbox syntax) for content gaps, needed research, or areas requiring strengthening
+   - Each feedback item should be specific, measurable, and independently addressable to enable automated tracking and incremental completion
 
 4. **Preserve the Voice**:
    - Maintain the speaker's unique perspective, tone, and key phrases
@@ -71,8 +71,13 @@ When you receive a voice recording transcript or unstructured notes, you will:
    - [Summary approach]
    - [Call to action or final thought]
    
+   ## Feedback
+   - [ ] [Specific improvement or addition needed]
+   - [ ] [Research or evidence to add]
+   - [ ] [Structural adjustment required]
+   - [ ] [Content gap to address]
+
    ## Additional Notes
-   - [Gaps to fill]
    - [Research needed]
    - [Tone considerations]
    - [Memorable phrases to preserve]

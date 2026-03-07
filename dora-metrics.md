@@ -154,9 +154,9 @@ Just as successful CEOs obsess over their financial bottom line, successful engi
 - **The CEO parallel**: This is the strongest framing device—lean into it heavily
 - **Humble attribution**: "It's not my answer, it's very simple, and it has research backing it"
 
-### Gaps to Fill
-- **How to measure**: Brief mention of tools/approaches for tracking these metrics
-- **The relationship between metrics**: Why optimizing one without the others fails
+### Feedback
+- [ ] **How to measure**: Brief mention of tools/approaches for tracking these metrics
+- [ ] **The relationship between metrics**: Why optimizing one without the others fails
 
 ### Structural Decisions
 - **Series setup**: This is clearly post #1 in a series about DORA capabilities
