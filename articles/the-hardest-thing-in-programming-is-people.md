@@ -2,6 +2,7 @@
 title: The Hardest Thing in Programming is People
 date: 02-28-2026
 description: Programming is automating thought, and thought is inherently human.
+stage: AI_DRAFT
 ---
 
 I once watched a team spend three weeks building a feature that perfectly solved the wrong problem. The code was clean, the tests passed, and the implementation was elegant. But somewhere between the customer's complaint and the developer's keyboard, the actual need got lost in translation.

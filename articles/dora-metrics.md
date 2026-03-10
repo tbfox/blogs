@@ -2,6 +2,7 @@
 title: DORA Metrics
 date: 03-07-2026
 description: The 4 DORA metrics are your engineering bottom line—the numbers that should guide every decision, just like financial metrics guide CEOs.
+stage: RAW_RECORDING
 ---
 
 Most business owners who fail have one thing in common: they don't track their bottom line.
