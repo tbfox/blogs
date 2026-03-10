@@ -17,6 +17,8 @@ The answer is not to avoid AI. The answer is to be honest about where it is and 
 
 My solution is a staged publishing workflow. Each stage is committed separately, labeled clearly, and visible to readers who want to see it. The AI does scaffolding. I do judgment. Nothing ships without me reading every word.
 
+<!-- STAGE_PIPELINE_DIAGRAM -->
+
 ## Stage 1: Stub
 
 The article exists before the content does. I publish a placeholder — a title, maybe a sentence or two, and a clear message that says something like: "This post is a stub. Content is coming."
