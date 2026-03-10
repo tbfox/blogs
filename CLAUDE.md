@@ -8,7 +8,7 @@ This is a pure data repository containing blog articles as Markdown files. There
 
 ## Article Format
 
-Each article is a `.md` file at the root with YAML frontmatter:
+Each article is a `.md` file in the `articles/` folder with YAML frontmatter:
 
 ```
 ---
