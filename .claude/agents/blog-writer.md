@@ -40,6 +40,7 @@ title: [Clear, Compelling Title]
 date: [MM-DD-YYYY format]
 image: [descriptive-filename.ext] (optional, do not include by default)
 description: [One concise sentence summarizing the article's value]
+stage: AI_DRAFT
 ---
 ```
 
