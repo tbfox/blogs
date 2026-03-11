@@ -1,17 +1,20 @@
 #!/usr/bin/env bun
 import { render, Text, Box, useStdout, useInput, useApp } from "ink";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { globSync, readFileSync } from "fs";
 import { basename } from "path";
+import { spawn } from "child_process";
 
-const STAGES = ["STUB", "RAW_RECORDING", "AI_PLAN", "HUMAN_PLAN", "AI_DRAFT", "FINAL", "UNKNOWN"] as const;
+const STAGES = ["STUB", "RAW_RECORDING", "GENERATING_PLAN", "AI_PLAN", "HUMAN_PLAN", "DRAFTING", "AI_DRAFT", "FINAL", "UNKNOWN"] as const;
 type Stage = (typeof STAGES)[number];
 
 const STAGE_COLORS: Record<Stage, string> = {
   STUB: "gray",
   RAW_RECORDING: "red",
+  GENERATING_PLAN: "redBright",
   AI_PLAN: "magenta",
   HUMAN_PLAN: "cyan",
+  DRAFTING: "blueBright",
   AI_DRAFT: "blue",
   FINAL: "green",
   UNKNOWN: "yellow",
@@ -95,7 +98,12 @@ function ArticleList() {
 
 function AdvanceSelect() {
   const { exit } = useApp();
-  const articles = loadArticles();
+
+  const [articles, setArticles] = useState(() => loadArticles());
+  const [cursor, setCursor] = useState(0);
+  const [busy, setBusy] = useState<Set<string>>(new Set());
+  const busyRef = useRef(busy);
+  busyRef.current = busy;
 
   const rows = STAGES.flatMap((stage) =>
     articles
@@ -106,32 +114,56 @@ function AdvanceSelect() {
   const slugWidth = Math.max(...rows.map((a) => a.slug.length));
   const stageWidth = Math.max(...STAGES.map((s) => s.length));
 
-  const [cursor, setCursor] = useState(0);
-  const [selected, setSelected] = useState<Article | null>(null);
-
-  useInput((_, key) => {
-    if (selected) return;
-    if (key.upArrow || _ === "k") setCursor((c) => Math.max(0, c - 1));
-    if (key.downArrow || _ === "j") setCursor((c) => Math.min(rows.length - 1, c + 1));
-    if (key.return) {
-      setSelected(rows[cursor]!);
-      exit();
-    }
-    if (key.escape || (key.ctrl && _ === "c")) exit();
-  });
-
-  if (selected) {
-    return (
-      <Box flexDirection="column">
-        <Text>Selected: <Text bold>{selected.slug}</Text></Text>
-      </Box>
+  function reloadArticle(slug: string) {
+    const content = readFileSync(`articles/${slug}.md`, "utf8");
+    const { stage, title } = parseFrontmatter(content);
+    setArticles((prev) =>
+      prev.map((a) => (a.slug === slug ? { ...a, stage, title: title ?? slug } : a))
     );
   }
+
+  function runPlanArticle(slug: string) {
+    setBusy((prev) => new Set(prev).add(slug));
+    // Optimistically show GENERATING_PLAN in the UI
+    setArticles((prev) =>
+      prev.map((a) => (a.slug === slug ? { ...a, stage: "GENERATING_PLAN" as Stage } : a))
+    );
+
+    const proc = spawn(
+      "claude",
+      [
+        "-p", `/plan-article ${slug}`,
+        "--allowedTools", `Read,Write`,
+      ],
+      { stdio: "ignore" }
+    );
+
+    proc.on("close", () => {
+      reloadArticle(slug);
+      setBusy((prev) => {
+        const next = new Set(prev);
+        next.delete(slug);
+        return next;
+      });
+    });
+  }
+
+  useInput((input, key) => {
+    if (key.upArrow || input === "k") setCursor((c) => Math.max(0, c - 1));
+    if (key.downArrow || input === "j") setCursor((c) => Math.min(rows.length - 1, c + 1));
+    if (key.return) {
+      const article = rows[cursor]!;
+      if (article.stage === "RAW_RECORDING" && !busyRef.current.has(article.slug)) {
+        runPlanArticle(article.slug);
+      }
+    }
+    if (key.escape || (key.ctrl && input === "c")) exit();
+  });
 
   return (
     <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Text dimColor>Use ↑↓ to navigate, Enter to select, Esc to quit</Text>
+        <Text dimColor>↑↓/jk to navigate · Enter on RAW_RECORDING to plan · Esc to quit</Text>
       </Box>
       {rows.map((a, i) => (
         <Row
