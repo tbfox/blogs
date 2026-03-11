@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
-import { render, Text, Box, useStdout } from "ink";
-import { globSync } from "fs";
-import { readFileSync } from "fs";
+import { render, Text, Box, useStdout, useInput, useApp } from "ink";
+import { useState } from "react";
+import { globSync, readFileSync } from "fs";
 import { basename } from "path";
 
 const STAGES = ["STUB", "RAW_RECORDING", "AI_PLAN", "HUMAN_PLAN", "AI_DRAFT", "FINAL", "UNKNOWN"] as const;
@@ -41,15 +41,32 @@ function loadArticles() {
 
 type Article = ReturnType<typeof loadArticles>[number];
 
-function Row({ article, slugWidth, stageWidth }: { article: Article; slugWidth: number; stageWidth: number }) {
+function Row({
+  article,
+  slugWidth,
+  stageWidth,
+  selected,
+}: {
+  article: Article;
+  slugWidth: number;
+  stageWidth: number;
+  selected?: boolean;
+}) {
   const { stdout } = useStdout();
   const cols = stdout.columns ?? 120;
   const stage = article.stage as Stage;
 
   return (
     <Box width={cols}>
-      <Box width={slugWidth + 2}><Text>{article.slug}</Text></Box>
-      <Box width={stageWidth + 2}><Text color={STAGE_COLORS[stage]}>{stage}</Text></Box>
+      <Box width={2}>
+        <Text>{selected ? ">" : " "}</Text>
+      </Box>
+      <Box width={slugWidth + 2}>
+        <Text bold={selected}>{article.slug}</Text>
+      </Box>
+      <Box width={stageWidth + 2}>
+        <Text color={STAGE_COLORS[stage]}>{stage}</Text>
+      </Box>
       <Text wrap="truncate-end">- {article.title}</Text>
     </Box>
   );
@@ -76,5 +93,67 @@ function ArticleList() {
   );
 }
 
-const { waitUntilExit } = render(<ArticleList />);
-waitUntilExit().finally(() => process.stdout.write("\x1B[?25h"));
+function AdvanceSelect() {
+  const { exit } = useApp();
+  const articles = loadArticles();
+
+  const rows = STAGES.flatMap((stage) =>
+    articles
+      .filter((a: Article) => a.stage === stage)
+      .map((a: Article) => ({ ...a, stage }))
+  );
+
+  const slugWidth = Math.max(...rows.map((a) => a.slug.length));
+  const stageWidth = Math.max(...STAGES.map((s) => s.length));
+
+  const [cursor, setCursor] = useState(0);
+  const [selected, setSelected] = useState<Article | null>(null);
+
+  useInput((_, key) => {
+    if (selected) return;
+    if (key.upArrow || _ === "k") setCursor((c) => Math.max(0, c - 1));
+    if (key.downArrow || _ === "j") setCursor((c) => Math.min(rows.length - 1, c + 1));
+    if (key.return) {
+      setSelected(rows[cursor]!);
+      exit();
+    }
+    if (key.escape || (key.ctrl && _ === "c")) exit();
+  });
+
+  if (selected) {
+    return (
+      <Box flexDirection="column">
+        <Text>Selected: <Text bold>{selected.slug}</Text></Text>
+      </Box>
+    );
+  }
+
+  return (
+    <Box flexDirection="column">
+      <Box marginBottom={1}>
+        <Text dimColor>Use ↑↓ to navigate, Enter to select, Esc to quit</Text>
+      </Box>
+      {rows.map((a, i) => (
+        <Row
+          key={a.slug}
+          article={a}
+          slugWidth={slugWidth}
+          stageWidth={stageWidth}
+          selected={i === cursor}
+        />
+      ))}
+    </Box>
+  );
+}
+
+const command = process.argv[2] ?? "list";
+
+let app: ReturnType<typeof render>;
+
+if (command === "advance") {
+  app = render(<AdvanceSelect />);
+} else {
+  app = render(<ArticleList />);
+}
+
+app.waitUntilExit().finally(() => process.stdout.write("\x1B[?25h"));
